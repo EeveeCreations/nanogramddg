@@ -1,1 +1,116 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+  /*Text*/
+  --master_font: 'Montserrat', sans-serif;
+
+  /*colors*/
+  --master_color: #020202;
+  --master_color_light: #5b5b5b;
+  --master_primairy_color: #372565;
+  --master_primairy_color_light: #5e4ba9;
+  --master_secundairy_color: #fded78;
+  --master_third_color: #c06283;
+  --master_third_color_darker: #853956;
+  --header_primairy_color: #3b3479;
+  --header_primairy_color_light: #949cf6;
+  --white: #eeeeee;
+  --gray: #d6d6d6;
+  --smokey-black: #0e0e0e;
+  --backgroundwhite: white;
+
+  /*Transparent colors*/
+  --transparent_white: rgba(238, 238, 238, 0.25);
+  --transparent_black: rgba(27, 27, 27, 0.5);
+
+
+  /*shadows*/
+  --box-shadow: rgba(27, 27, 27, 0.64) 5px 5px 5px;
+  --box-shadow-lifted: rgba(8, 8, 8, 0.84) 5px 15px 5px;
+  --box-shadow-white: rgba(238, 238, 238, 0.64) 0 0 10px ;
+  --box-shadow-white-lifted: rgba(244, 244, 244, 0.84) 5px 15px 5px;
+
+
+  /*margin*/
+  --master_bottem_margin: 20px;
+  --margin_center_center: auto;
+  --margin_center_horizental: 0 auto;
+  --margin_center_vertical: auto 0;
+
+  --padding_master:20px 0;
+
+  /*    grid gaps*/
+  --grid-gap-xl: 20%;
+  --grid-gap: 10%;
+}
+/*Body elements*/
+body {
+  /*background:url(src/assets/light_space_background.jpg) fixed no-repeat;*/
+  overflow: scroll;
+  overflow-x: hidden;
+  font-size: 14px;
+  font-family: var(--master_font);
+  font-style: normal;
+  box-sizing: border-box;
+  color: var(--white);
+}
+p {
+  margin-bottom: var(--master_bottem_margin);
+}
+a{
+  width: 80%;
+  text-shadow: var(--smokey-black) 1px 1px 5px;
+  color: var(--master_secundairy_color);
+  font-weight: bolder;
+  text-decoration: none;
+}
+
+a:hover{
+  color: var(--master_primairy_color_light);
+  text-decoration: none;
+  border-bottom: solid var(--master_primairy_color_light) 3px;
+  transition: width 1s ease;
+}
+.activeLink{
+  background: none;
+  color: var(--master_primairy_color_light);
+  border-bottom: solid var(--master_primairy_color_light) 3px;
+}
+.activeLink :hover{
+  background: none;
+  color: var(--master_primairy_color_light);
+  border-bottom: solid var(--master_primairy_color_light) 3px;
+}
+ul{
+  list-style-type: square;
+}
+textarea{
+  font-family: inherit;
+}
+
+/*Scrollbar ____________________________________________________________________________________*/
+body::-webkit-scrollbar{
+  background-color: transparent;
+}
+body::-webkit-scrollbar-thumb{
+  background-color: var(--master_primairy_color_light);
+}
+/*Images_____________________________________________________ Images*/
+img {
+  height: inherit;
+  width: inherit;
+  object-fit: cover;
+}
+
+figure {
+  width: 100%;
+  height: 100%;
+  margin-bottom: var(--master_bottem_margin);
+}
+
+figcaption {
+  font-weight: bold;
+  font-size: 80%;
+  color: var(--master_color_light);
+  margin-bottom: var(--master_bottem_margin);
+}
+/*Page Specifics_____________________________________________________________________ Page Specifics*/

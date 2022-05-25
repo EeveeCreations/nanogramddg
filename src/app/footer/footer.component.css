@@ -1,0 +1,7 @@
+.footer{
+  width: 100%;
+  height: 120px;
+  position: absolute;
+  bottom: 0;
+  background: var(--master_primairy_color);
+}
