@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
-import {HighScore} from "../model/highScore";
+import {HighScore} from "../model/high-score";
 
 @Injectable({
   providedIn: 'root'

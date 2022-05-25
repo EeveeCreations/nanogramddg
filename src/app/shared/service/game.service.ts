@@ -21,17 +21,45 @@ export class GameService {
     this.setSubscription();
   }
 
-  private startNewGame(){
-    this.currentBoard = this.generateBoardService.generateANewBoard(this.currentBoard.level);
-    this.boardSubject.next(this.currentBoard)
+  startNewGame(){
+    this.currentBoard = this.generateBoardService.startBoard();
+    this.startNewRound();
+  }
 
+  startNewRound(){
+    this.currentBoard = this.generateBoardService.generateANewBoard(this.currentBoard.level);
+    this.boardSubject.next(this.currentBoard);
+  }
+
+
+  private setSubscription(): void{
+    this.scoreSubscription = this.scoreService.currentScore.subscribe();
+}
+
+  checkIfTileCorrect(x: number, y: number){
+    this.currentBoard.answerTiles.answerTiles[x][y].isFilled == true ? this.fillTile(x,y): this.inCorrectPlacement();
+  }
+
+  private inCorrectPlacement() {
+    this.removeLife();
+  }
+
+  private removeLife() {
+    this.currentBoard.lives -= 1
+    this.currentBoard.lives == 0 ? this.GameOver() : null;
+  }
+
+  private updateLives() {
 
   }
 
-  private setSubscription(): void{
-    this.scoreSubscription = this.scoreService.currentScore.subscribe()
-}
+  fillTile(x: number, y: number) {
+    this.currentBoard.tiles[x][y].isFilled = true;
+    this.boardSubject.next(this.currentBoard);
+  }
 
+  private GameOver() {
 
-
+    return null;
+  }
 }

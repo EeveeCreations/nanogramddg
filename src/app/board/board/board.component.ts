@@ -15,7 +15,9 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   constructor(
     private gameService: GameService
-  ) { }
+  ) {
+    this.setSubscription();
+  }
 
   ngOnInit(): void {
     this.setSubscription();
@@ -32,4 +34,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
+  changeTile(x: number, y: number) {
+    this.gameService.checkIfTileCorrect(x,y);
+  }
 }

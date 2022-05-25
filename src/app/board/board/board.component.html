@@ -1,7 +1,14 @@
-<article>
+<article xmlns="http://www.w3.org/1999/html">
   <section>
     <header>
       <h2>{{title}}</h2>
     </header>
   </section>
+  <section>
+    <div class="row" *ngFor="let row of board.tiles; let x = index;">
+      <div class="tile" [className]="tile.isFilled ? 'fill': ''"  *ngFor="let tile of row; let y = index" (click)="changeTile(x, y)">
+      </div>
+    </div>
+  </section>
+
 </article>
