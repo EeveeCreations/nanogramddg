@@ -9,7 +9,7 @@ import {environment} from "../../../environments/environment";
 })
 export class GenerateBoardService {
   private ROWS_COLUMNS: number = environment.columns_rows;
-  private MINIMUM_FILLED_TILES: number = environment.minimum;
+  private MAX_FILLED_TILES: number = environment.minimum;
   private FILLED_TILES: number = 2;
 
   constructor() {
@@ -35,13 +35,13 @@ export class GenerateBoardService {
 
   //Based of which level you are tiles will disappear
   private chooseDifficulty(level: number): number {
-    let maxFilledSquares: number;
-    maxFilledSquares = this.ROWS_COLUMNS - (this.FILLED_TILES * level);
-    if(maxFilledSquares < this.MINIMUM_FILLED_TILES){
-      maxFilledSquares = this.MINIMUM_FILLED_TILES;
+    let minFilledSquares: number;
+    minFilledSquares = this.ROWS_COLUMNS - (this.FILLED_TILES * (level - 1)) ;
+    if(minFilledSquares < this.MAX_FILLED_TILES){
+      minFilledSquares = this.MAX_FILLED_TILES;
     }
-    console.log(maxFilledSquares)
-    return maxFilledSquares;
+    console.log(minFilledSquares)
+    return minFilledSquares;
 
   }
 
@@ -51,9 +51,9 @@ export class GenerateBoardService {
     return this.fillAnswerModel(maxFilledSquares, answerModelTiles);
   }
 
-  private fillAnswerModel(maxFilledSquares: number, answerModelTiles: TileModel[][]): BoardAnswerModel {
+  private fillAnswerModel(minFilledSquares: number, answerModelTiles: TileModel[][]): BoardAnswerModel {
     for (let row in answerModelTiles) {
-      let filledAmount = Math.round(Math.random() * maxFilledSquares) + this.MINIMUM_FILLED_TILES;
+      let filledAmount = this.setFilledAmount(minFilledSquares);
       //Set the amount of the wanted filled squares
       for (let filled: number = 0; filled < filledAmount; filled++) {
         let yColumn = Math.round(Math.random() * (this.ROWS_COLUMNS - 1));
@@ -69,6 +69,14 @@ export class GenerateBoardService {
     let yAmountFilled: number[] = amounts[1];
     console.log(answerModelTiles)
     return new BoardAnswerModel(xAmountFilled, yAmountFilled, answerModelTiles)
+  }
+
+  private setFilledAmount(minFilledSquares: number) {
+    let filledAmount = Math.round(Math.random() * minFilledSquares) + this.MAX_FILLED_TILES;
+    if(filledAmount < this.MAX_FILLED_TILES){
+      filledAmount = this.MAX_FILLED_TILES;
+    }
+    return filledAmount
   }
 
   //For each row we  find a random placement of the tiles, We save the amount of tiles in xAMountFilled or for columns yAmountFilled

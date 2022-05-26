@@ -1,13 +1,13 @@
 <article>
   <section>
-    <header class="col-xs-12">
-      <h2>{{title}}</h2>
+    <header class="col-xs-12 text-center popover-title">
+      <h2>{{board.name}}</h2>
     </header>
   </section>
   <section>
     <app-lives [lives]="board.lives" ></app-lives>
   </section>
-  <section class="col-xs-12 container-fluid">
+  <section class="col-xs-12 text-center container-fluid">
     <span class="amountIn col-xs-12"></span>
     <span class="amountIn columns col-xs-12" *ngFor="let column of board.answerTiles.yFilledSquares;let y = index">{{ board.answerTiles.yFilledSquares[y]}}</span>
     <div class="row col-xs-12" *ngFor="let row of board.tiles; let x = index;">

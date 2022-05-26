@@ -12,4 +12,7 @@ export class LivesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getLives(): number[] {
+    return Array(this.lives).fill(this.lives);
+  }
 }
