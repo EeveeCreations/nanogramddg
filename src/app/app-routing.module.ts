@@ -4,10 +4,19 @@ import {ErrorPageComponent} from "./error-page/error-page.component";
 
 const routes: Routes = [
   {
-    path: '', loadChildren: () => {
+    path: 'home', loadChildren: () => {
       return import('./home/home.module').then(
         (m) => {
           return m.HomeModule;
+        }
+      );
+    }
+  },
+  {
+    path: 'score', loadChildren: () => {
+      return import('./scores/score.module').then(
+        (m) => {
+          return m.ScoreModule;
         }
       );
     }

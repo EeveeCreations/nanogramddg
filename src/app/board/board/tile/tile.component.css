@@ -1,8 +1,8 @@
 .tile{
   height: 6.2vw;
   width: 6.2vw;
-  max-height: 50px;
-  max-width: 50px;
+  max-height: 40px;
+  max-width: 40px;
   border: 1px solid var(--master_primairy_color);
   display: flex;
   justify-content: center;
@@ -12,12 +12,26 @@
 .filled{
   height: 6.2vw;
   width: 6.2vw;
-  max-height: 50px;
-  max-width: 50px;
+  max-height: 40px;
+  max-width: 40px;
   border: 1px solid var(--master_primairy_color);
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   background-color: var(--master_primairy_color);
+}
+
+@media only screen and (max-width: 1201px) {
+  .tile, .filled{
+    height: 4vw;
+    width: 4vw;
+  }
+}
+
+@media only screen and (max-width: 601px) {
+  .tile, .filled{
+    height: 5vw;
+    width: 5vw;
+  }
 }

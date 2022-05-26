@@ -19,7 +19,7 @@
   --backgroundwhite: white;
 
   /*Transparent colors*/
-  --transparent_white: rgba(238, 238, 238, 0.25);
+  --transparent_white: rgba(238, 238, 238, 0.38);
   --transparent_black: rgba(27, 27, 27, 0.5);
 
 
@@ -44,8 +44,9 @@
 }
 /*Body elements*/
 body {
-  /*background:url(src/assets/light_space_background.jpg) fixed no-repeat;*/
-  overflow: scroll;
+  background:url(src/assets/light_space_background.jpg)fixed no-repeat;
+  background-size: cover;
+  overflow: hidden;
   overflow-x: hidden;
   font-size: 14px;
   font-family: var(--master_font);
@@ -114,3 +115,23 @@ figcaption {
   margin-bottom: var(--master_bottem_margin);
 }
 /*Page Specifics_____________________________________________________________________ Page Specifics*/
+
+.btn .btn-danger{
+  background-color: var(--master_third_color);
+  color: var(--white);
+  border-color:var(--master_third_color_darker) ;
+}
+
+.overlay{
+  min-height: 100vw;
+  overflow: hidden;
+  background: var(--transparent_white);
+  width: 100%;
+  position: relative;
+}
+
+.popover-title{
+  background-color: var(--master_third_color)!important;
+  border-color: var(--master_third_color_darker)!important;
+  color: var(--white);
+}

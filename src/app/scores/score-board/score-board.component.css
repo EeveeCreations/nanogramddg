@@ -1,0 +1,15 @@
+.title{
+  color: var(--master_primairy_color);
+  font-weight: 600;
+  font-size: 72px;
+}
+hr{
+  width: 70%;
+  border-top: solid 4px var(--master_primairy_color_light);;
+}
+
+ .btn-danger{
+  background-color: var(--master_third_color);
+  color: var(--white);
+  border-color:var(--master_third_color_darker) ;
+}

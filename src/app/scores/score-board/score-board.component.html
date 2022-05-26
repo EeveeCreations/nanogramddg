@@ -1,1 +1,8 @@
-<p>score-board works!</p>
+<section>
+  <button [routerLink]="['/home']" class="btn btn-danger">Return To Menu</button>
+  <h1 class="panel-title text-center title">Highscores</h1>
+  <hr>
+  <ul class="list-group">
+    <app-score *ngFor="let score of GetAllScores()" [score]="score"></app-score>
+  </ul>
+</section>

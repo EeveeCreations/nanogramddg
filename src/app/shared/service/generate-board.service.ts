@@ -18,7 +18,7 @@ export class GenerateBoardService {
   generateANewBoard(level: number): BoardModel {
     const answerTiles: BoardAnswerModel = this.generateAnswerToBoard(level);
     const setNewTiles: TileModel[][] = this.setNewTilesSet();
-    return new BoardModel(level, "Level" + level, setNewTiles, answerTiles);
+    return new BoardModel(level, "Level " + level, setNewTiles, answerTiles);
   }
 
   //Makes Enough tiles and gives every tile their position
@@ -40,9 +40,7 @@ export class GenerateBoardService {
     if(minFilledSquares < this.MAX_FILLED_TILES){
       minFilledSquares = this.MAX_FILLED_TILES;
     }
-    console.log(minFilledSquares)
     return minFilledSquares;
-
   }
 
   private generateAnswerToBoard(level: number): BoardAnswerModel {
@@ -80,7 +78,7 @@ export class GenerateBoardService {
   }
 
   //For each row we  find a random placement of the tiles, We save the amount of tiles in xAMountFilled or for columns yAmountFilled
-  private countFilled(tiles: TileModel[][]): number[][] {
+  public countFilled(tiles: TileModel[][]): number[][] {
     let amountX: number[] = new Array(this.ROWS_COLUMNS).fill(0);
     let amountY: number[] = new Array(this.ROWS_COLUMNS).fill(0);
 

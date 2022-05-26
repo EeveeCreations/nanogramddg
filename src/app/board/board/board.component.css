@@ -4,7 +4,9 @@
   flex-direction: row;
 }
 .popover-title{
-  background-color: var(--master_third_color_darker);
+  height: 70px;
+  background-color: var(--master_third_color);
+  border-color: var(--master_third_color_darker);
   color: var(--white);
 }
 .amountIn{
@@ -12,14 +14,41 @@
   padding-right: 0;
   height: 6.2vw;
   width: 6.2vw;
-  max-width: 50px;
-  max-height: 50px;
+  max-width: 40px;
+  max-height: 40px;
   position: relative;
-  font-size: 2.5vw;
+  font-size: 2vw;
   font-weight: 600;
   color: var(--master_third_color_darker);
+}
+.playBox{
+  width: 70%;
+  margin: 0  15%;
 }
 .columns{
   text-align: center;
   justify-content: space-around;
+}
+
+@media only screen and (max-width: 1201px) {
+  .playBox{
+    width: 90%;
+    margin: 5%;
+  }
+  .amountIn{
+    font-size: 3vw;
+    height: 4vw;
+    width: 4vw;
+  }
+}
+
+@media only screen and (max-width: 601px) {
+  .playBox{
+    width: 100%;
+  }
+  .amountIn{
+    font-size: 4vw;
+    height: 5vw;
+    width: 5vw;
+  }
 }

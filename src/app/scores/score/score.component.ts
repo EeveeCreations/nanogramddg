@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {HighScore} from "../../shared/model/high-score";
 
 @Component({
   selector: 'app-score',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./score.component.css']
 })
 export class ScoreComponent implements OnInit {
+  @Input() score: HighScore;
 
   constructor() { }
 

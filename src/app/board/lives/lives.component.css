@@ -1,5 +1,5 @@
 .lives{
-  color: var(--master_primairy_color);
-  font-size: 36px;
+  color: var(--master_primairy_color_light);
+  font-size: 22px;
   font-weight: 600;
 }

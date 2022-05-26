@@ -1,0 +1,9 @@
+.btn-group > .btn {
+  margin: 10px auto;
+}
+
+
+.btn-group > .btn .but {
+  background: var(--master_primairy_color_light) !important;
+  border-color: var(--master_primairy_color) !important;
+}

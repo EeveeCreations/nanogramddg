@@ -1,21 +1,24 @@
-<article>
-  <section>
+<article class="overlay">
+  <section >
     <header class="col-xs-12 text-center popover-title">
       <h2>{{board.name}}</h2>
     </header>
   </section>
   <section>
-    <app-lives [lives]="board.lives" ></app-lives>
+    <app-lives [lives]="board.lives"></app-lives>
   </section>
   <section class="col-xs-12 text-center container-fluid">
-    <span class="amountIn col-xs-12"></span>
-    <span class="amountIn columns col-xs-12" *ngFor="let column of board.answerTiles.yFilledSquares;let y = index">{{ board.answerTiles.yFilledSquares[y]}}</span>
-    <div class="row col-xs-12" *ngFor="let row of board.tiles; let x = index;">
-      <span class="amountIn">{{board.answerTiles.xFilledSquares[x]}}</span>
-      <app-tile *ngFor="let tile of row; let y = index" [tile] ="tile" (click)="changeTile(x, y)">
-        <span class="amountIn">{{board.answerTiles.xFilledSquares[y]}}</span>
-      </app-tile>
-    </div>
+    <section class="playBox text-center">
+      <span class="amountIn col-xs-12"></span>
+      <span class="amountIn columns col-xs-12"
+            *ngFor="let column of board.answerTiles.yFilledSquares;let y = index">{{ board.answerTiles.yFilledSquares[y]}}</span>
+      <div class="row col-xs-12" *ngFor="let row of board.tiles; let x = index;">
+        <span class="amountIn">{{board.answerTiles.xFilledSquares[x]}}</span>
+        <app-tile *ngFor="let tile of row; let y = index" [tile]="tile" (click)="changeTile(x, y)">
+          <span class="amountIn">{{board.answerTiles.xFilledSquares[y]}}</span>
+        </app-tile>
+      </div>
+    </section>
   </section>
 
 </article>

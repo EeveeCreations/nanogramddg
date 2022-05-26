@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  columns_rows: 10,
-  minimum: 5
+  columns_rows: 15,
+  minimum: 9
 };
 
 /*
