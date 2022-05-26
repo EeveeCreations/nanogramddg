@@ -73,7 +73,6 @@ export class GenerateBoardService {
     if(filledAmount < this.MIN_FILLED_TILES ){
       filledAmount = this.ROWS_COLUMNS;
     }
-    console.log(filledAmount)
     return filledAmount
   }
 
