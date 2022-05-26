@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {BoardModel} from "../model/board.model";
 import {TileModel} from "../model/tile.model";
-import {range} from "rxjs";
 import {BoardAnswerModel} from "../model/board-answer.model";
+import {environment} from "../../../environments/environment";
+import {empty} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GenerateBoardService {
-  private ROWS_COLUMNS: number = 15;
-  private MINIMUM_FILLED_TILES: number = 7;
+  private ROWS_COLUMNS: number = environment.columns_rows;
+  private MINIMUM_FILLED_TILES: number = environment.mininum;
   private FILLED_TILES: number = 2;
 
   constructor() {
@@ -18,49 +19,63 @@ export class GenerateBoardService {
   generateANewBoard(level: number): BoardModel {
     const answerTiles: BoardAnswerModel = this.generateAnswerToBoard(level);
     const setNewTiles: TileModel[][] = this.setNewTilesSet();
-    return new BoardModel(level, "Test" + level, setNewTiles, answerTiles);
+    return new BoardModel(level, "Level" + level, setNewTiles, answerTiles);
   }
 
+  //Makes Enough tiles and gives every tile their position
   private setNewTilesSet(): TileModel[][] {
-    let emptyModel: TileModel[][] = [];
+    let emptyModel: TileModel[][] = [[]];
     for (let row:number = 0 ;row < this.ROWS_COLUMNS;  row++){
+      emptyModel[row] = [];
       for (let column:number = 0 ;column < this.ROWS_COLUMNS;  column++) {
-        console.log(column+ ','+ row)
-        emptyModel[row][column] = new TileModel(row, column, false)
+        emptyModel[row][column] = new TileModel(row, column, false);
       }
     }
-    console.log(emptyModel);
     return emptyModel;
   }
 
+  //Based of which level you are tiles will disappear
   private chooseDifficulty(level: number): number {
     let maxFilledSquares: number;
-    maxFilledSquares = this.ROWS_COLUMNS - (this.FILLED_TILES * level)
-    return maxFilledSquares  ! < 0 ? maxFilledSquares : this.MINIMUM_FILLED_TILES;
+    maxFilledSquares = this.ROWS_COLUMNS - (this.FILLED_TILES * level);
+    return maxFilledSquares < this.MINIMUM_FILLED_TILES ? maxFilledSquares : this.MINIMUM_FILLED_TILES;
 
   }
 
   private generateAnswerToBoard(level: number): BoardAnswerModel {
     let answerModelTiles: TileModel[][] = this.setNewTilesSet();
     let maxFilledSquares = this.chooseDifficulty(level);
-    let answerModel: BoardAnswerModel = this.fillAnswerModel(maxFilledSquares, answerModelTiles);
-    return answerModel;
+    return this.fillAnswerModel(maxFilledSquares, answerModelTiles);
   }
 
   private fillAnswerModel(maxFilledSquares: number, answerModelTiles: TileModel[][]): BoardAnswerModel {
-    let xAmountFilled: number[] = [];
+
+    let xAmountFilled: number[] = this.countFilled()
     let yAmountFilled: number[] = [];
+
     for (let row in answerModelTiles) {
-      xAmountFilled[row] = (Math.random() * maxFilledSquares);
-      for (let filled in range(xAmountFilled[row])) {
-        console.log(filled)
-        let tile = answerModelTiles[row][Math.random() * this.ROWS_COLUMNS];
-        tile.isFilled = true;
-        yAmountFilled[tile.y] = yAmountFilled[tile.y] != null ? yAmountFilled[tile.y] + 1 : 1;
+      //For each row we  find a random placement of the tiles, We save the amount of tiles in xAMountFilled or for columns yAmountFilled
+      xAmountFilled[row] = Math.round(Math.random() * maxFilledSquares);
+      //Set the amount of the wanted filled squares
+      for (let filled: number = 0; filled < xAmountFilled[row]; filled++) {
+        let yColumn = Math.round(Math.random() * (this.ROWS_COLUMNS -1));
+        let tile: TileModel = answerModelTiles[row][yColumn];
+        //Check if Tile is filled
+        if (!tile.isFilled) {
+          tile.isFilled = true;
+        }
+        //if the tile is filled. it has te be added to the Y amount  we have to watch
+        yAmountFilled[yColumn] = yAmountFilled[yColumn] != null ? yAmountFilled[yColumn] + 1 : 1;
       }
-      console.log(answerModelTiles)
+    }
+    for(let row in yAmountFilled){
+      yAmountFilled[row].valueOf() == undefined ?  yAmountFilled[row] = 0 : yAmountFilled[row]
     }
     return new BoardAnswerModel(xAmountFilled, yAmountFilled, answerModelTiles)
+  }
+
+  private countFilled() {
+    return [];
   }
 
   startBoard() {
@@ -70,8 +85,10 @@ export class GenerateBoardService {
   private fillAllTilesOfBoard(): BoardAnswerModel {
     let filledModel: TileModel[][] = [];
     for (let row:number = 0 ;row < this.ROWS_COLUMNS;  row++){
+      filledModel[row] = [];
       for (let column:number = 0 ;column < this.ROWS_COLUMNS;  column++) {
-        filledModel[row][column] = new TileModel(row, column, true)
+        //Pretty much copies setNewTileSet but gives vacj AnswerModel Fully Filled
+        filledModel[row][column] = new TileModel(row, column, true);
       }
     }
     return new BoardAnswerModel([15 * 15], [15 * 15], filledModel);

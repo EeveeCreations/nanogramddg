@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  //"node_modules/bootstrap/dist/css/bootstrap.min.css"
   start() {
     this.gameService.startNewGame();
     this.router.navigate(['/game'],{relativeTo: this.activeRoute})

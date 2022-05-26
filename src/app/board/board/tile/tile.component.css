@@ -1,0 +1,23 @@
+.tile{
+  height: 6.2vw;
+  width: 6.2vw;
+  max-height: 50px;
+  max-width: 50px;
+  border: 1px solid var(--master_primairy_color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.filled{
+  height: 6.2vw;
+  width: 6.2vw;
+  max-height: 50px;
+  max-width: 50px;
+  border: 1px solid var(--master_primairy_color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: var(--master_primairy_color);
+}

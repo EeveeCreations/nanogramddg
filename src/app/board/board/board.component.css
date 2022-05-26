@@ -1,0 +1,21 @@
+.row{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+.amountIn{
+  padding-left: 0;
+  padding-right: 0;
+  height: 6.2vw;
+  width: 6.2vw;
+  max-width: 50px;
+  max-height: 50px;
+  position: relative;
+  font-size: 2.5vw;
+  font-weight: 600;
+  color: var(--master_third_color_darker);
+}
+.columns{
+  text-align: center;
+  justify-content: space-around;
+}

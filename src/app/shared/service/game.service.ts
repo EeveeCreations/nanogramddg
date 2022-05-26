@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Subject, Subscription} from "rxjs";
+import {BehaviorSubject, Subscription} from "rxjs";
 import {BoardModel} from "../model/board.model";
 import {ScoreService} from "./score.service";
 import {GenerateBoardService} from "./generate-board.service";
@@ -9,9 +9,10 @@ import {TileService} from "./tile.service";
   providedIn: 'root'
 })
 export class GameService {
-  public boardSubject: Subject<BoardModel> = new Subject<BoardModel>();
+  public boardSubject: BehaviorSubject<BoardModel> = new BehaviorSubject<BoardModel>(this.generateBoardService.startBoard());
   public scoreSubscription: Subscription = new Subscription();
   private currentBoard: BoardModel;
+  private currentScore: number;
 
   constructor(
     private generateBoardService: GenerateBoardService,
@@ -22,18 +23,28 @@ export class GameService {
   }
 
   startNewGame(){
-    this.currentBoard = this.generateBoardService.startBoard();
+    this.currentBoard = this.boardSubject.value
     this.startNewRound();
   }
 
   startNewRound(){
-    this.currentBoard = this.generateBoardService.generateANewBoard(this.currentBoard.level);
+    this.currentBoard = this.generateBoardService.generateANewBoard(this.currentBoard.level +1);
     this.boardSubject.next(this.currentBoard);
+
   }
 
 
   private setSubscription(): void{
-    this.scoreSubscription = this.scoreService.currentScore.subscribe();
+    this.scoreSubscription = this.scoreService.currentScore.subscribe(
+      (newScore) =>{
+        this.currentScore = newScore;
+      }
+    );
+    this.boardSubject.subscribe(
+      (newBoard) =>{
+        this.currentBoard = newBoard;
+      }
+    )
 }
 
   checkIfTileCorrect(x: number, y: number){
@@ -55,11 +66,25 @@ export class GameService {
 
   fillTile(x: number, y: number) {
     this.currentBoard.tiles[x][y].isFilled = true;
+    this.currentBoard.tiles == this.currentBoard.answerTiles.answerTiles ? this.gameWon(): '';
     this.boardSubject.next(this.currentBoard);
+  }
+
+  private gameWon() {
+    this.sendCongrats();
+    this.startNewRound();
+  }
+
+  private sendCongrats() {
+    if(window.confirm("You Found the image! Can you see what it is ?")){
+      this.startNewRound();
+    }
+
   }
 
   private GameOver() {
 
     return null;
   }
+
 }

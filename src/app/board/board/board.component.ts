@@ -21,6 +21,11 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.setSubscription();
+    this.returnToStart();
+  }
+
+  private returnToStart() {
+    this.board.level == 0 ? this.gameService.startNewGame() :'';
   }
 
   private setSubscription() {
