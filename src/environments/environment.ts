@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   columns_rows: 10,
-  mininum: 5
+  minimum: 5
 };
 
 /*

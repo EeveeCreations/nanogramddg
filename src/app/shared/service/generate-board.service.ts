@@ -3,14 +3,13 @@ import {BoardModel} from "../model/board.model";
 import {TileModel} from "../model/tile.model";
 import {BoardAnswerModel} from "../model/board-answer.model";
 import {environment} from "../../../environments/environment";
-import {empty} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GenerateBoardService {
   private ROWS_COLUMNS: number = environment.columns_rows;
-  private MINIMUM_FILLED_TILES: number = environment.mininum;
+  private MINIMUM_FILLED_TILES: number = environment.minimum;
   private FILLED_TILES: number = 2;
 
   constructor() {
@@ -38,7 +37,11 @@ export class GenerateBoardService {
   private chooseDifficulty(level: number): number {
     let maxFilledSquares: number;
     maxFilledSquares = this.ROWS_COLUMNS - (this.FILLED_TILES * level);
-    return maxFilledSquares < this.MINIMUM_FILLED_TILES ? maxFilledSquares : this.MINIMUM_FILLED_TILES;
+    if(maxFilledSquares < this.MINIMUM_FILLED_TILES){
+      maxFilledSquares = this.MINIMUM_FILLED_TILES;
+    }
+    console.log(maxFilledSquares)
+    return maxFilledSquares;
 
   }
 
@@ -49,33 +52,41 @@ export class GenerateBoardService {
   }
 
   private fillAnswerModel(maxFilledSquares: number, answerModelTiles: TileModel[][]): BoardAnswerModel {
-
-    let xAmountFilled: number[] = this.countFilled()
-    let yAmountFilled: number[] = [];
-
     for (let row in answerModelTiles) {
-      //For each row we  find a random placement of the tiles, We save the amount of tiles in xAMountFilled or for columns yAmountFilled
-      xAmountFilled[row] = Math.round(Math.random() * maxFilledSquares);
+      let filledAmount = Math.round(Math.random() * maxFilledSquares) + this.MINIMUM_FILLED_TILES;
       //Set the amount of the wanted filled squares
-      for (let filled: number = 0; filled < xAmountFilled[row]; filled++) {
-        let yColumn = Math.round(Math.random() * (this.ROWS_COLUMNS -1));
+      for (let filled: number = 0; filled < filledAmount; filled++) {
+        let yColumn = Math.round(Math.random() * (this.ROWS_COLUMNS - 1));
         let tile: TileModel = answerModelTiles[row][yColumn];
         //Check if Tile is filled
         if (!tile.isFilled) {
           tile.isFilled = true;
         }
-        //if the tile is filled. it has te be added to the Y amount  we have to watch
-        yAmountFilled[yColumn] = yAmountFilled[yColumn] != null ? yAmountFilled[yColumn] + 1 : 1;
       }
     }
-    for(let row in yAmountFilled){
-      yAmountFilled[row].valueOf() == undefined ?  yAmountFilled[row] = 0 : yAmountFilled[row]
-    }
+    const amounts = this.countFilled(answerModelTiles)
+    let xAmountFilled: number[] = amounts[0];
+    let yAmountFilled: number[] = amounts[1];
+    console.log(answerModelTiles)
     return new BoardAnswerModel(xAmountFilled, yAmountFilled, answerModelTiles)
   }
 
-  private countFilled() {
-    return [];
+  //For each row we  find a random placement of the tiles, We save the amount of tiles in xAMountFilled or for columns yAmountFilled
+  private countFilled(tiles: TileModel[][]): number[][] {
+    let amountX: number[] = new Array(this.ROWS_COLUMNS).fill(0);
+    let amountY: number[] = new Array(this.ROWS_COLUMNS).fill(0);
+
+    for (let row of tiles) {
+      for (let tile of row) {
+        if (tile.isFilled) {
+          //  If the tile is filled count it up in the specific row and column
+          amountX[tile.x] ++;
+          amountY[tile.y] ++;
+        }
+      }
+    }
+
+    return [amountX, amountY];
   }
 
   startBoard() {
@@ -84,7 +95,7 @@ export class GenerateBoardService {
 
   private fillAllTilesOfBoard(): BoardAnswerModel {
     let filledModel: TileModel[][] = [];
-    for (let row:number = 0 ;row < this.ROWS_COLUMNS;  row++){
+    for (let row: number = 0; row < this.ROWS_COLUMNS; row++) {
       filledModel[row] = [];
       for (let column:number = 0 ;column < this.ROWS_COLUMNS;  column++) {
         //Pretty much copies setNewTileSet but gives vacj AnswerModel Fully Filled
