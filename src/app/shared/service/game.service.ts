@@ -5,6 +5,7 @@ import {ScoreService} from "./score.service";
 import {GenerateBoardService} from "./generate-board.service";
 import {TileService} from "./tile.service";
 import {Router} from "@angular/router";
+import {TileModel} from "../model/tile.model";
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,7 @@ export class GameService {
   }
 
   private inCorrectPlacement() {
+    window.alert("This Tile is not correct Think again!")
     this.removeLife();
   }
 
@@ -68,16 +70,12 @@ export class GameService {
   }
 
   fillTile(x: number, y: number) {
-    this.currentBoard.tiles[x][y].isFilled = true;
-    console.log(this.currentBoard);
-    console.log(this.currentBoard.answerTiles);
-    const filledArray = this.generateBoardService.countFilled(this.currentBoard.tiles);
-    console.log(filledArray[0], filledArray[1])
-    console.log(this.currentBoard.answerTiles.xFilledSquares, this.currentBoard.answerTiles.yFilledSquares)
-    if (this.isTheGameWon()) {
-      this.gameWon();
-    }
-    this.boardSubject.next(this.currentBoard);
+     const tile: TileModel = this.currentBoard.tiles[x][y]
+      tile.isFilled = true;
+      if (this.isTheGameWon()) {
+        this.roundWon();
+      }
+      this.boardSubject.next(this.currentBoard);
   }
 
   //this.currentBoard.answerTiles.answerTiles.toString()
@@ -96,28 +94,36 @@ export class GameService {
     return xArray && yArray
   }
 
-  private gameWon() {
+  private roundWon() {
     this.sendCongrats();
   }
 
   private sendCongrats() {
     if (window.confirm("You Found the image! Can you see what it is ?")) {
-      this.startNewRound();
-    }else{
+      this.currentBoard.level == 3 ? this.gameFinished() : this.startNewGame();
+    } else {
       this.leaveTheGame();
     }
   }
+
+  private gameFinished() {
+    if (window.confirm("You finnished Level 3! Goodjob!")) {
+      this.leaveTheGame();
+    }
+  }
+
 
   private GameOver() {
     if (window.confirm("you ran out of lives. Do you wan to try again ?")) {
+      this.currentBoard.level = 0;
       this.startNewGame();
-    }else{
+    } else {
       this.leaveTheGame();
     }
   }
 
-
   private leaveTheGame() {
+    this.currentBoard.level = 0;
     this.routeService.navigate(['./home'])
   }
 }

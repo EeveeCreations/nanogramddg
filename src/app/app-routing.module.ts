@@ -12,15 +12,15 @@ const routes: Routes = [
       );
     }
   },
-  {
-    path: 'score', loadChildren: () => {
-      return import('./scores/score.module').then(
-        (m) => {
-          return m.ScoreModule;
-        }
-      );
-    }
-  },
+  // {
+  //   path: 'score', loadChildren: () => {
+  //   //   return import('./scores/score.module').then(
+  //   //     (m) => {
+  //   //       return m.ScoreModule;
+  //   //     }
+  //   //   );
+  //   // }
+  // },
   {
     path: 'game', loadChildren: () => {
       return import('./board/board.module').then(
@@ -30,7 +30,7 @@ const routes: Routes = [
       );
     }
   },
-  {path: '**', component: ErrorPageComponent}
+  {path: '**', redirectTo:'home'}
 ]
 
 @NgModule({

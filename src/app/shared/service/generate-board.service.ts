@@ -9,8 +9,9 @@ import {environment} from "../../../environments/environment";
 })
 export class GenerateBoardService {
   private ROWS_COLUMNS: number = environment.columns_rows;
-  private MAX_FILLED_TILES: number = environment.minimum;
+  private MIN_FILLED_TILES: number = environment.minimum;
   private FILLED_TILES: number = 2;
+
 
   constructor() {
   }
@@ -35,10 +36,9 @@ export class GenerateBoardService {
 
   //Based of which level you are tiles will disappear
   private chooseDifficulty(level: number): number {
-    let minFilledSquares: number;
-    minFilledSquares = this.ROWS_COLUMNS - (this.FILLED_TILES * (level - 1)) ;
-    if(minFilledSquares < this.MAX_FILLED_TILES){
-      minFilledSquares = this.MAX_FILLED_TILES;
+    let minFilledSquares: number = this.ROWS_COLUMNS - (this.FILLED_TILES * (level - 1)) ;
+    if(minFilledSquares < this.MIN_FILLED_TILES){
+      minFilledSquares = this.MIN_FILLED_TILES;
     }
     return minFilledSquares;
   }
@@ -51,9 +51,9 @@ export class GenerateBoardService {
 
   private fillAnswerModel(minFilledSquares: number, answerModelTiles: TileModel[][]): BoardAnswerModel {
     for (let row in answerModelTiles) {
-      let filledAmount = this.setFilledAmount(minFilledSquares);
       //Set the amount of the wanted filled squares
-      for (let filled: number = 0; filled < filledAmount; filled++) {
+      let filledAmount = this.setFilledAmount(minFilledSquares);
+      for (let filled: number = 0; filled <= filledAmount; filled++) {
         let yColumn = Math.round(Math.random() * (this.ROWS_COLUMNS - 1));
         let tile: TileModel = answerModelTiles[row][yColumn];
         //Check if Tile is filled
@@ -65,15 +65,15 @@ export class GenerateBoardService {
     const amounts = this.countFilled(answerModelTiles)
     let xAmountFilled: number[] = amounts[0];
     let yAmountFilled: number[] = amounts[1];
-    console.log(answerModelTiles)
     return new BoardAnswerModel(xAmountFilled, yAmountFilled, answerModelTiles)
   }
 
   private setFilledAmount(minFilledSquares: number) {
-    let filledAmount = Math.round(Math.random() * minFilledSquares) + this.MAX_FILLED_TILES;
-    if(filledAmount < this.MAX_FILLED_TILES){
-      filledAmount = this.MAX_FILLED_TILES;
+    let filledAmount = Math.round(Math.random() * minFilledSquares);
+    if(filledAmount < this.MIN_FILLED_TILES ){
+      filledAmount = this.ROWS_COLUMNS;
     }
+    console.log(filledAmount)
     return filledAmount
   }
 
@@ -91,7 +91,6 @@ export class GenerateBoardService {
         }
       }
     }
-
     return [amountX, amountY];
   }
 
@@ -104,7 +103,7 @@ export class GenerateBoardService {
     for (let row: number = 0; row < this.ROWS_COLUMNS; row++) {
       filledModel[row] = [];
       for (let column:number = 0 ;column < this.ROWS_COLUMNS;  column++) {
-        //Pretty much copies setNewTileSet but gives vacj AnswerModel Fully Filled
+        //Pretty much copies setNewTileSet but gives a new  AnswerModel Fully Filled
         filledModel[row][column] = new TileModel(row, column, true);
       }
     }

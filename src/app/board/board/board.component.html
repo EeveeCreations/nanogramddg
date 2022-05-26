@@ -1,5 +1,5 @@
-<article class="overlay">
-  <section >
+<article class="overlay text-center">
+  <section>
     <header class="col-xs-12 text-center popover-title">
       <h2>{{board.name}}</h2>
     </header>
@@ -9,11 +9,11 @@
   </section>
   <section class="col-xs-12 text-center container-fluid">
     <section class="playBox text-center">
-      <span class="amountIn col-xs-12"></span>
-      <span class="amountIn columns col-xs-12"
+      <span class="amountIn text-center col-xs-12"></span>
+      <span class="amountIn text-center columns col-xs-12"
             *ngFor="let column of board.answerTiles.yFilledSquares;let y = index">{{ board.answerTiles.yFilledSquares[y]}}</span>
       <div class="row col-xs-12" *ngFor="let row of board.tiles; let x = index;">
-        <span class="amountIn">{{board.answerTiles.xFilledSquares[x]}}</span>
+        <span class="  amountIn">{{board.answerTiles.xFilledSquares[x]}}</span>
         <app-tile *ngFor="let tile of row; let y = index" [tile]="tile" (click)="changeTile(x, y)">
           <span class="amountIn">{{board.answerTiles.xFilledSquares[y]}}</span>
         </app-tile>

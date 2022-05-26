@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   columns_rows: 15,
-  minimum: 9
+  minimum: 8
 };
 
 /*

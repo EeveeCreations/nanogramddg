@@ -6,7 +6,7 @@ export class BoardModel{
   private _name: String;
   private _tiles: TileModel[][];
   private _answerTiles: BoardAnswerModel;
-  private _lives: number = 5;
+  private _lives: number = 15;
 
 
   constructor(level: number, name: String, tiles: TileModel[][], answerTiles: BoardAnswerModel) {
